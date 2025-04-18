@@ -1,1 +1,2 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/initial-moderation-prompt.ts';
+import '@/ai/flows/summarize-moderation-guidelines.ts';
