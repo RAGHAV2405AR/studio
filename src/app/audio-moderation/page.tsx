@@ -1,9 +1,116 @@
+'use client';
+
+import {Button} from '@/components/ui/button';
+import {useState, useRef, useEffect} from 'react';
+import {Icons} from '@/components/icons';
+import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
+
 const AudioModerationPage = () => {
+  const [audioURL, setAudioURL] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<string | null>(null);
+  const mediaRecorder = useRef<MediaRecorder | null>(null);
+  const audioChunks = useRef<Blob[]>([]);
+  const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
+
+  useEffect(() => {
+    const getMicrophonePermission = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+        setHasMicrophonePermission(true);
+      } catch (error) {
+        console.error('Error accessing microphone:', error);
+        setHasMicrophonePermission(false);
+      }
+    };
+
+    getMicrophonePermission();
+  }, []);
+
+  const startRecording = async () => {
+    if (!hasMicrophonePermission) {
+      alert('Please enable microphone permissions in your browser settings to use this app.');
+      return;
+    }
+
+    audioChunks.current = [];
+    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    mediaRecorder.current = new MediaRecorder(stream);
+
+    mediaRecorder.current.ondataavailable = event => {
+      audioChunks.current.push(event.data);
+    };
+
+    mediaRecorder.current.onstop = () => {
+      const audioBlob = new Blob(audioChunks.current, {type: 'audio/webm'});
+      const url = URL.createObjectURL(audioBlob);
+      setAudioURL(url);
+    };
+
+    mediaRecorder.current.start();
+    setIsRecording(true);
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder.current) {
+      mediaRecorder.current.stop();
+      setIsRecording(false);
+    }
+  };
+
+  const analyzeAudio = async () => {
+    if (!audioURL) {
+      alert('Please record audio first.');
+      return;
+    }
+
+    setIsAnalyzing(true);
+    // Simulate audio analysis
+    setTimeout(() => {
+      setAnalysisResult('No harmful speech detected.');
+      setIsAnalyzing(false);
+    }, 2000);
+  };
+
   return (
-    <div>
-      <h1>Audio Moderation</h1>
-      <p>Analyze audio files for harmful speech and aggressive tones.</p>
-      {/* Add Audio Moderation UI and functionality here */}
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Audio Moderation</h1>
+      <p className="mb-4">Analyze audio files for harmful speech and aggressive tones.</p>
+
+      { !(hasMicrophonePermission) && (
+        <Alert variant="destructive">
+          <AlertTitle>Microphone Access Required</AlertTitle>
+          <AlertDescription>
+            Please allow microphone access to use this feature.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      <div className="mb-4 flex gap-2">
+        <Button onClick={startRecording} disabled={isRecording || isAnalyzing}>
+          {isRecording ? 'Recording...' : 'Start Recording'}
+        </Button>
+        <Button onClick={stopRecording} disabled={!isRecording || isAnalyzing}>
+          Stop Recording
+        </Button>
+        <Button onClick={analyzeAudio} disabled={!audioURL || isAnalyzing}>
+          {isAnalyzing ? 'Analyzing...' : 'Analyze Audio'}
+        </Button>
+      </div>
+
+      {audioURL && (
+        <div className="mb-4">
+          <audio src={audioURL} controls className="w-full"></audio>
+        </div>
+      )}
+
+      {analysisResult && (
+        <div className="mt-4">
+          <h2 className="text-lg font-bold mb-2">Analysis Result:</h2>
+          <p>{analysisResult}</p>
+        </div>
+      )}
     </div>
   );
 };
