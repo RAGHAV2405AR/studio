@@ -54,6 +54,14 @@ export default function Home() {
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
+              <SidebarMenuItem>
+                <Link href="/url-moderation">
+                  <SidebarMenuButton>
+                    <Icons.externalLink/>
+                    <span>URL Moderation</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
@@ -74,3 +82,4 @@ export default function Home() {
   );
 }
 
+    
