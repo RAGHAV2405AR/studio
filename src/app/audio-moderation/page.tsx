@@ -4,9 +4,13 @@ import {Button} from '@/components/ui/button';
 import {useState, useRef, useEffect} from 'react';
 import {Icons} from '@/components/icons';
 import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
+import {Input} from '@/components/ui/input';
+import {Card, CardContent} from '@/components/ui/card';
+import {moderateAudio} from '@/ai/flows/moderate-audio';
 
 const AudioModerationPage = () => {
   const [audioURL, setAudioURL] = useState<string | null>(null);
+  const [audioFile, setAudioFile] = useState<File | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
@@ -46,6 +50,7 @@ const AudioModerationPage = () => {
       const audioBlob = new Blob(audioChunks.current, {type: 'audio/webm'});
       const url = URL.createObjectURL(audioBlob);
       setAudioURL(url);
+      setAudioFile(new File([audioBlob], 'recording.webm', {type: 'audio/webm'}));
     };
 
     mediaRecorder.current.start();
@@ -59,18 +64,35 @@ const AudioModerationPage = () => {
     }
   };
 
+  const handleAudioUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setAudioFile(file);
+      setAudioURL(URL.createObjectURL(file));
+    }
+  };
+
   const analyzeAudio = async () => {
-    if (!audioURL) {
-      alert('Please record audio first.');
+    if (!audioFile) {
+      alert('Please record or upload audio first.');
       return;
     }
 
     setIsAnalyzing(true);
-    // Simulate audio analysis
-    setTimeout(() => {
-      setAnalysisResult('No harmful speech detected.');
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result as string;
+        const moderationResult = await moderateAudio({audio: base64String});
+        setAnalysisResult(moderationResult.reason);
+      };
+      reader.readAsDataURL(audioFile);
+    } catch (error) {
+      console.error('Error analyzing audio:', error);
+      setAnalysisResult('An error occurred while analyzing the audio.');
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -94,6 +116,12 @@ const AudioModerationPage = () => {
         <Button onClick={stopRecording} disabled={!isRecording || isAnalyzing}>
           Stop Recording
         </Button>
+        <Input
+          type="file"
+          accept="audio/*"
+          onChange={handleAudioUpload}
+          className="w-full mb-2"
+        />
         <Button onClick={analyzeAudio} disabled={!audioURL || isAnalyzing}>
           {isAnalyzing ? 'Analyzing...' : 'Analyze Audio'}
         </Button>
