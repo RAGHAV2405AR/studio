@@ -6,6 +6,7 @@ import {Card, CardContent} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
 import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
 import {Icons} from '@/components/icons';
+import {detectDeepfake} from '../../ai/flows/deepfake-detection';
 
 const DeepfakeDetectionPage = () => {
   const [media, setMedia] = useState<File | null>(null);
@@ -23,17 +24,17 @@ const DeepfakeDetectionPage = () => {
   };
 
   const handleAnalyzeMedia = async () => {
-    if (!media) {
+    if (!mediaUrl) {
       alert('Please select an image or video to analyze.');
       return;
     }
 
     setIsLoading(true);
     try {
-      // Placeholder for deepfake detection logic
-      setTimeout(() => {
-        setResult('Deepfake analysis complete. Result: Not a deepfake.');
-      }, 2000); // Simulate analysis time
+      const deepfakeResult = await detectDeepfake({mediaUrl: mediaUrl});
+      setResult(
+        `Deepfake analysis complete.\nDeepfake Detected: ${deepfakeResult.isDeepfake ? 'Yes' : 'No'}\nConfidence: ${deepfakeResult.confidence}\nReason: ${deepfakeResult.reason}`
+      );
     } catch (error) {
       console.error('Error analyzing media:', error);
       setResult('An error occurred while analyzing the media.');
