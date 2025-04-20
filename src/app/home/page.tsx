@@ -15,6 +15,7 @@ import {Icons} from '@/components/icons';
 import Link from 'next/link';
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import Chatbot from '@/components/chatbot';
 
 const Home = () => {
   const [selectedModeration, setSelectedModeration] = useState<string | null>(null);
@@ -92,6 +93,7 @@ const Home = () => {
                 </CardContent>
               </Card>
             )}
+            <Chatbot/>
           </div>
         </main>
       </SidebarProvider>
