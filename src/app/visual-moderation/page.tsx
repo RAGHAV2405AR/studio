@@ -11,7 +11,7 @@ import {Icons} from '@/components/icons';
 const VisualModerationPage = () => {
   const [media, setMedia] = useState<File | null>(null);
   const [mediaUrl, setMediaUrl] = useState<string | null>(null);
-  const [result, setResult] = useState<{ isSafe: boolean; reason: string } | null>(null);
+  const [result, setResult<{ isSafe: boolean; reason: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
 
@@ -53,7 +53,7 @@ const VisualModerationPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Visual Moderation</h1>
+      <h1 className="text-2xl font-bold mb-4">Visual Analysis</h1>
       <p className="mb-4">Analyze images and videos for violent content and policy violations.</p>
 
       <div className="mb-4">

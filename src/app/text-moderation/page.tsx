@@ -4,11 +4,13 @@ import {moderateText} from '@/ai/flows/moderate-text';
 import {Button} from '@/components/ui/button';
 import {Textarea} from '@/components/ui/textarea';
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 
 const TextModerationPage = () => {
   const [text, setText] = useState('');
-  const [result, setResult] = useState<{ isHateSpeech: boolean; reason: string } | null>(null);
+  const [result, setResult<{ isHateSpeech: boolean; reason: string } | null>(null)] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleAnalyzeText = async () => {
     setIsLoading(true);
@@ -28,7 +30,7 @@ const TextModerationPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Text Moderation</h1>
+      <h1 className="text-2xl font-bold mb-4">Text Analysis</h1>
       <p className="mb-4">Analyze text content for hate speech and harmful elements.</p>
 
       <div className="mb-4">

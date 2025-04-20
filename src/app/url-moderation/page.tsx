@@ -7,7 +7,7 @@ import {useState} from 'react';
 
 const URLModerationPage = () => {
   const [url, setURL] = useState('');
-  const [result, setResult] = useState<{ isHarmful: boolean; reason: string } | null>(null);
+  const [result, setResult<{ isHarmful: boolean; reason: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAnalyzeURL = async () => {
@@ -28,7 +28,7 @@ const URLModerationPage = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">URL Moderation</h1>
+      <h1 className="text-2xl font-bold mb-4">URL Analysis</h1>
       <p className="mb-4">Analyze URLs for harmful content and policy violations.</p>
 
       <div className="mb-4">

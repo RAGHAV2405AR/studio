@@ -18,7 +18,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import Chatbot from '@/components/chatbot';
 
 const Home = () => {
-  const [selectedModeration, setSelectedModeration] = useState<string | null>(null);
+  const [selectedAnalysis, setSelectedAnalysis] = useState<string | null>(null);
 
   return (
       <SidebarProvider>
@@ -33,7 +33,7 @@ const Home = () => {
                   <Link href="/text-moderation">
                     <SidebarMenuButton>
                       <Icons.messageSquare/>
-                      <span>Text Moderation</span>
+                      <span>Text Analysis</span>
                     </SidebarMenuButton>
                   </Link>
                 </SidebarMenuItem>
@@ -41,7 +41,7 @@ const Home = () => {
                   <Link href="/audio-moderation">
                     <SidebarMenuButton>
                       <Icons.mic/>
-                      <span>Audio Moderation</span>
+                      <span>Audio Analysis</span>
                     </SidebarMenuButton>
                   </Link>
                 </SidebarMenuItem>
@@ -49,7 +49,7 @@ const Home = () => {
                   <Link href="/visual-moderation">
                     <SidebarMenuButton>
                       <Icons.shield/>
-                      <span>Visual Moderation</span>
+                      <span>Visual Analysis</span>
                     </SidebarMenuButton>
                   </Link>
                 </SidebarMenuItem>
@@ -65,7 +65,7 @@ const Home = () => {
                   <Link href="/url-moderation">
                     <SidebarMenuButton>
                       <Icons.externalLink/>
-                      <span>URL Moderation</span>
+                      <span>URL Analysis</span>
                     </SidebarMenuButton>
                   </Link>
                 </SidebarMenuItem>
@@ -81,15 +81,15 @@ const Home = () => {
         <main className="flex flex-1 p-4">
           <div className="w-full">
             {/* Main content will go here */}
-            <h1 className="text-2xl font-bold mb-4">Moderation Dashboard</h1>
-            <p className="mb-4">Select a moderation type from the sidebar to view results.</p>
+            <h1 className="text-2xl font-bold mb-4">Content Analysis Dashboard</h1>
+            <p className="mb-4">Select an analysis type from the sidebar to view results.</p>
 
-            {selectedModeration && (
+            {selectedAnalysis && (
               <Card className="w-full">
                 <CardContent>
-                  <h2 className="text-lg font-bold mb-2">Selected Moderation: {selectedModeration}</h2>
-                  {/* Display moderation results based on selectedModeration */}
-                  <p>Results for {selectedModeration} will be displayed here.</p>
+                  <h2 className="text-lg font-bold mb-2">Selected Analysis: {selectedAnalysis}</h2>
+                  {/* Display analysis results based on selectedAnalysis */}
+                  <p>Results for {selectedAnalysis} will be displayed here.</p>
                 </CardContent>
               </Card>
             )}
@@ -101,3 +101,4 @@ const Home = () => {
 }
 
 export default Home;
+

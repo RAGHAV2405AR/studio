@@ -21,7 +21,7 @@ const Chatbot = () => {
       // Basic intent detection for harmful content inquiries
       let aiResponse;
       if (inputText.toLowerCase().includes('harmful') || inputText.toLowerCase().includes('hate') || inputText.toLowerCase().includes('deepfake') || inputText.toLowerCase().includes('violent')) {
-        const suggestion = 'It seems you\'re asking about harmful content. For specific content moderation, please navigate to the appropriate section:';
+        const suggestion = 'It seems you\'re asking about harmful content. For specific content analysis, please navigate to the appropriate section:';
         aiResponse = {response: suggestion};
       } else {
         try {
@@ -64,11 +64,11 @@ const Chatbot = () => {
           ))}
           {messages.length > 0 && messages[messages.length - 1].text.includes('navigate to the appropriate section:') && (
             <div className="flex flex-col items-start">
-              <Link href="/text-moderation" className="text-blue-500 hover:underline">Text Moderation</Link>
-              <Link href="/audio-moderation" className="text-blue-500 hover:underline">Audio Moderation</Link>
-              <Link href="/visual-moderation" className="text-blue-500 hover:underline">Visual Moderation</Link>
+              <Link href="/text-moderation" className="text-blue-500 hover:underline">Text Analysis</Link>
+              <Link href="/audio-moderation" className="text-blue-500 hover:underline">Audio Analysis</Link>
+              <Link href="/visual-moderation" className="text-blue-500 hover:underline">Visual Analysis</Link>
               <Link href="/deepfake-detection" className="text-blue-500 hover:underline">Deepfake Detection</Link>
-              <Link href="/url-moderation" className="text-blue-500 hover:underline">URL Moderation</Link>
+              <Link href="/url-moderation" className="text-blue-500 hover:underline">URL Analysis</Link>
             </div>
           )}
         </div>

@@ -100,7 +100,7 @@ const AudioModerationPage = () => {
        <Card className="w-full">
         <CardContent className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
-      <h1 className="text-2xl font-bold mb-4">Audio Moderation</h1>
+      <h1 className="text-2xl font-bold mb-4">Audio Analysis</h1>
       <p className="mb-4">Analyze audio files for harmful speech and aggressive tones.</p>
       </div>
 
