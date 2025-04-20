@@ -24,7 +24,7 @@ const Home = () => {
       <SidebarProvider>
         <Sidebar>
           <SidebarHeader>
-            <h2>Guardian AI</h2>
+            <h2>Umbrella</h2>
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
