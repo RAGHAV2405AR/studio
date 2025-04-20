@@ -18,10 +18,27 @@ const Chatbot = () => {
       const userMessage = {text: inputText, isUser: true};
       setMessages([...messages, userMessage]);
 
-      // Basic intent detection for harmful content inquiries
+      // Enhanced intent detection for harmful content inquiries, providing specific links
       let aiResponse;
-      if (inputText.toLowerCase().includes('harmful') || inputText.toLowerCase().includes('hate') || inputText.toLowerCase().includes('deepfake') || inputText.toLowerCase().includes('violent')) {
-        const suggestion = 'It seems you\'re asking about harmful content. For specific content analysis, please navigate to the appropriate section:';
+      const inputTextLower = inputText.toLowerCase();
+      if (inputTextLower.includes('harmful') || inputTextLower.includes('hate') || inputTextLower.includes('deepfake') || inputTextLower.includes('violent')) {
+        let suggestion = 'It seems you\'re asking about potentially harmful content. Here are some relevant analysis tools:\n';
+        if (inputTextLower.includes('text')) {
+          suggestion += `- <Link href="/text-moderation" className="text-blue-500 hover:underline">Text Analysis</Link>\n`;
+        }
+        if (inputTextLower.includes('audio')) {
+          suggestion += `- <Link href="/audio-moderation" className="text-blue-500 hover:underline">Audio Analysis</Link>\n`;
+        }
+        if (inputTextLower.includes('visual') || inputTextLower.includes('image') || inputTextLower.includes('video')) {
+          suggestion += `- <Link href="/visual-moderation" className="text-blue-500 hover:underline">Visual Analysis</Link>\n`;
+        }
+        if (inputTextLower.includes('deepfake')) {
+          suggestion += `- <Link href="/deepfake-detection" className="text-blue-500 hover:underline">Deepfake Detection</Link>\n`;
+        }
+        if (inputTextLower.includes('url')) {
+          suggestion += `- <Link href="/url-moderation" className="text-blue-500 hover:underline">URL Analysis</Link>\n`;
+        }
+        suggestion += 'For more specific content analysis, please use the provided links.';
         aiResponse = {response: suggestion};
       } else {
         try {
@@ -62,13 +79,23 @@ const Chatbot = () => {
               {message.text}
             </div>
           ))}
-          {messages.length > 0 && messages[messages.length - 1].text.includes('navigate to the appropriate section:') && (
+          {messages.length > 0 && messages[messages.length - 1].text.includes('relevant analysis tools:') && (
             <div className="flex flex-col items-start">
-              <Link href="/text-moderation" className="text-blue-500 hover:underline">Text Analysis</Link>
-              <Link href="/audio-moderation" className="text-blue-500 hover:underline">Audio Analysis</Link>
-              <Link href="/visual-moderation" className="text-blue-500 hover:underline">Visual Analysis</Link>
-              <Link href="/deepfake-detection" className="text-blue-500 hover:underline">Deepfake Detection</Link>
-              <Link href="/url-moderation" className="text-blue-500 hover:underline">URL Analysis</Link>
+              {/* Render links based on the chatbot's response */}
+              {messages[messages.length - 1].text.split('\n').map((line, index) => {
+                if (line.startsWith('-')) {
+                  // Extract the URL and link text
+                  const parts = line.substring(2).split('>');
+                  const url = parts[0].trim();
+                  const linkText = parts[1].substring(0, parts[1].length - 3); // Remove '</a'
+                  return (
+                    <Link key={index} href={url} className="text-blue-500 hover:underline">
+                      {linkText}
+                    </Link>
+                  );
+                }
+                return null;
+              })}
             </div>
           )}
         </div>
