@@ -2,7 +2,6 @@
 
 import {Button} from '@/components/ui/button';
 import {useState, useRef, useEffect} from 'react';
-import {Icons} from '@/components/icons';
 import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
 import {Input} from '@/components/ui/input';
 import {Card, CardContent} from '@/components/ui/card';
@@ -12,8 +11,8 @@ const AudioModerationPage = () => {
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(isAnalyzing);
-  const [analysisResult, setAnalysisResult] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<{ isHarmful: boolean; reason: string } | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
   const [hasMicrophonePermission, setHasMicrophonePermission] = useState(false);
@@ -84,12 +83,12 @@ const AudioModerationPage = () => {
       reader.onloadend = async () => {
         const base64String = reader.result as string;
         const moderationResult = await moderateAudio({audio: base64String});
-        setAnalysisResult(moderationResult.reason);
+        setAnalysisResult(moderationResult);
       };
       reader.readAsDataURL(audioFile);
     } catch (error) {
       console.error('Error analyzing audio:', error);
-      setAnalysisResult('An error occurred while analyzing the audio.');
+      setAnalysisResult({ isHarmful: true, reason: 'An error occurred while analyzing the audio.' });
     } finally {
       setIsAnalyzing(false);
     }
@@ -142,7 +141,12 @@ const AudioModerationPage = () => {
       {analysisResult && (
         <div className="mt-4">
           <h2 className="text-lg font-bold mb-2">Analysis Result:</h2>
-          <p>{analysisResult}</p>
+          <p>
+            <strong>Harmful Content:</strong> {analysisResult.isHarmful ? 'Yes' : 'No'}
+          </p>
+          <p>
+            <strong>Reason:</strong> {analysisResult.reason}
+          </p>
         </div>
       )}
       </CardContent>
