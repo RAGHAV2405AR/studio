@@ -11,7 +11,7 @@ import {Icons} from '@/components/icons';
 const VisualModerationPage = () => {
   const [media, setMedia] = useState<File | null>(null);
   const [mediaUrl, setMediaUrl] = useState<string | null>(null);
-  const [result, setResult<{ isSafe: boolean; reason: string } | null>(null)] = useState(null);
+  const [result, setResult] = useState<{ isSafe: boolean; reason: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
 
