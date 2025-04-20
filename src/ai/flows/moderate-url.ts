@@ -18,7 +18,7 @@ export type ModerateURLInput = z.infer<typeof ModerateURLInputSchema>;
 
 const ModerateURLOutputSchema = z.object({
   isHarmful: z.boolean().describe('Whether the URL leads to harmful content.'),
-  reason: z.string().describe('The reason for the determination.'),
+  reason: z.string().describe('A detailed explanation of why the URL is considered harmful or safe.'),
 });
 export type ModerateURLOutput = z.infer<typeof ModerateURLOutputSchema>;
 
@@ -36,14 +36,14 @@ const prompt = ai.definePrompt({
   output: {
     schema: z.object({
       isHarmful: z.boolean().describe('Whether the URL leads to harmful content.'),
-      reason: z.string().describe('The reason for the determination, including why it is considered safe if not harmful.'),
+      reason: z.string().describe('A detailed explanation of why the URL is considered harmful or safe. Include specific examples or aspects of the content that support the determination.'),
     }),
   },
   prompt: `You are an AI content moderation expert. Your task is to analyze the content at the given URL and determine if it contains harmful material.
 
 URL: {{{url}}}
 
-Determine whether the URL leads to harmful content. If it does, set isHarmful to true and provide a detailed reason. If not, set isHarmful to false and explain why it is considered safe and does not contain harmful content. Provide a short explanation why.
+Determine whether the URL leads to harmful content. If it does, set isHarmful to true and provide a detailed reason. If not, set isHarmful to false and provide a detailed explanation of why it is considered safe, including specific examples or aspects of the content that support this determination. Provide a detailed explanation why.
 `,
 });
 

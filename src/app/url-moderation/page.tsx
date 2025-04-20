@@ -5,9 +5,14 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useState} from 'react';
 
+interface ModerationResult {
+  isHarmful: boolean;
+  reason: string;
+}
+
 const URLModerationPage = () => {
   const [url, setURL] = useState('');
-  const [result, setResult<{ isHarmful: boolean; reason: string } | null>(null);
+  const [result, setResult] = useState<ModerationResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAnalyzeURL = async () => {
