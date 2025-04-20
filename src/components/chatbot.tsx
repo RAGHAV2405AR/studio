@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Textarea} from '@/components/ui/textarea';
 import {Card, CardContent} from '@/components/ui/card';
+import {chat} from '@/ai/flows/chatbot-flow';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState<
@@ -11,17 +12,32 @@ const Chatbot = () => {
   >([]);
   const [inputText, setInputText] = useState('');
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (inputText.trim() !== '') {
-      setMessages([...messages, {text: inputText, isUser: true}]);
-      // Here you would typically send the inputText to an AI and get a response
-      // For now, let's simulate an AI response
-      setTimeout(() => {
+      const userMessage = {text: inputText, isUser: true};
+      setMessages([...messages, userMessage]);
+
+      try {
+        const aiResponse = await chat({
+          message: inputText,
+          conversationHistory: messages.map(msg => ({
+            role: msg.isUser ? 'user' : 'assistant',
+            content: msg.text,
+          })),
+        });
+
         setMessages(currentMessages => [
           ...currentMessages,
-          {text: 'This is a dummy response from the AI.', isUser: false},
+          {text: aiResponse.response, isUser: false},
         ]);
-      }, 500);
+      } catch (error) {
+        console.error('Error getting AI response:', error);
+        setMessages(currentMessages => [
+          ...currentMessages,
+          {text: 'Sorry, I encountered an error. Please try again.', isUser: false},
+        ]);
+      }
+
       setInputText('');
     }
   };
@@ -57,3 +73,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
+
