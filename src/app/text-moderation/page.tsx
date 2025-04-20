@@ -8,7 +8,7 @@ import {useRouter} from 'next/navigation';
 
 const TextModerationPage = () => {
   const [text, setText] = useState('');
-  const [result, setResult<{ isHateSpeech: boolean; reason: string } | null>(null)] = useState(null);
+  const [result, setResult<{ isHateSpeech: boolean; reason: string } | null>] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -31,7 +31,9 @@ const TextModerationPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Text Analysis</h1>
-      <p className="mb-4">Analyze text content for hate speech and harmful elements.</p>
+      <p className="mb-4">
+        Analyze text content for hate speech and harmful elements. It is important to moderate text to prevent the spread of hate speech, bullying, and other forms of online abuse, fostering a safer online environment.
+      </p>
 
       <div className="mb-4">
         <Textarea

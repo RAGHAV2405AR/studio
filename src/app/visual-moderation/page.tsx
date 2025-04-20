@@ -54,7 +54,9 @@ const VisualModerationPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Visual Analysis</h1>
-      <p className="mb-4">Analyze images and videos for violent content and policy violations.</p>
+      <p className="mb-4">
+        Analyze images and videos for violent content and policy violations. It is important to moderate visual content to prevent the spread of harmful material such as graphic violence, explicit content, and other inappropriate images or videos, ensuring a safer and more respectful online experience.
+      </p>
 
       <div className="mb-4">
         <Input

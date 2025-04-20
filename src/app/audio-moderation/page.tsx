@@ -12,7 +12,7 @@ const AudioModerationPage = () => {
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(isAnalyzing);
   const [analysisResult, setAnalysisResult] = useState<string | null>(null);
   const mediaRecorder = useRef<MediaRecorder | null>(null);
   const audioChunks = useRef<Blob[]>([]);
@@ -101,7 +101,9 @@ const AudioModerationPage = () => {
         <CardContent className="flex flex-col space-y-4">
         <div className="flex items-center justify-between">
       <h1 className="text-2xl font-bold mb-4">Audio Analysis</h1>
-      <p className="mb-4">Analyze audio files for harmful speech and aggressive tones.</p>
+      <p className="mb-4">
+        Analyze audio files for harmful speech and aggressive tones. It is important to moderate audio to detect and prevent the spread of harmful content such as hate speech, threats, and harassment, promoting a more inclusive and respectful communication environment.
+      </p>
       </div>
 
       { !(hasMicrophonePermission) && (

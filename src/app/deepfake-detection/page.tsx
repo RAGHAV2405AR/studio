@@ -6,7 +6,7 @@ import {Card, CardContent} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
 import {Alert, AlertDescription, AlertTitle} from '@/components/ui/alert';
 import {Icons} from '@/components/icons';
-import {detectDeepfake} from '../../ai/flows/deepfake-detection';
+import {detectDeepfake} from '@/ai/flows/deepfake-detection';
 
 const DeepfakeDetectionPage = () => {
   const [media, setMedia] = useState<File | null>(null);
@@ -46,7 +46,9 @@ const DeepfakeDetectionPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Deepfake Detection</h1>
-      <p className="mb-4">Analyze images and videos for deepfakes and manipulated media.</p>
+      <p className="mb-4">
+        Analyze images and videos for deepfakes and manipulated media. It is important to detect deepfakes to prevent the spread of misinformation, protect individuals from defamation, and maintain trust in media and online content.
+      </p>
 
       <div className="mb-4">
         <Input

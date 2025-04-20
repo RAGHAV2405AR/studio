@@ -29,7 +29,9 @@ const URLModerationPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">URL Analysis</h1>
-      <p className="mb-4">Analyze URLs for harmful content and policy violations.</p>
+      <p className="mb-4">
+        Analyze URLs for harmful content and policy violations. It is important to moderate URLs to prevent users from accessing malicious websites, phishing scams, and other harmful online content, safeguarding their security and privacy.
+      </p>
 
       <div className="mb-4">
         <Input
@@ -60,5 +62,3 @@ const URLModerationPage = () => {
 };
 
 export default URLModerationPage;
-
-    
