@@ -98,7 +98,7 @@ const AudioModerationPage = () => {
     <div className="container mx-auto p-4">
        <Card className="w-full">
         <CardContent className="flex flex-col space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between ml-4">
       <h1 className="text-2xl font-bold mb-4">Audio Analysis</h1>
       <p className="mb-4">
         Analyze audio files for harmful speech and aggressive tones. It is important to moderate audio to detect and prevent the spread of harmful content such as hate speech, threats, and harassment, promoting a more inclusive and respectful communication environment.
