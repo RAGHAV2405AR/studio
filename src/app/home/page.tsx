@@ -74,7 +74,7 @@ const Home = () => {
           </SidebarContent>
           <SidebarFooter>
             <p className="text-xs text-muted-foreground">
-              Powered by Firebase Studio
+              Powered by THE DUO.
             </p>
           </SidebarFooter>
         </Sidebar>
