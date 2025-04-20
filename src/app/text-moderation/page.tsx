@@ -8,7 +8,7 @@ import {useRouter} from 'next/navigation';
 
 const TextModerationPage = () => {
   const [text, setText] = useState('');
-  const [result, setResult<{ isHateSpeech: boolean; reason: string } | null>] = useState(null);
+  const [result, setResult] = useState<{ isHateSpeech: boolean; reason: string } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -63,3 +63,5 @@ const TextModerationPage = () => {
 };
 
 export default TextModerationPage;
+
+    
